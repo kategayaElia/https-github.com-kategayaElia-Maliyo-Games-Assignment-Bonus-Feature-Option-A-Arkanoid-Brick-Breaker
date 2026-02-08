@@ -1,0 +1,293 @@
+body {
+  margin: 0;
+  background: linear-gradient(to bottom, #0a0a2a, #000);
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  overflow: hidden;
+}
+
+/* Screen containers */
+.screen {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.screen.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade-in animation */
+.fade-in {
+  animation: fadeIn 1s ease forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Home Page */
+#gameTitle {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+/* Brick fragments container */
+#brickFragments {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+/* Individual brick fragment */
+.fragment {
+  width: 20px;
+  height: 10px;
+  background: #ff3333;
+  border: 1px solid #fff;
+  animation: scatter 2s infinite ease-in-out;
+}
+.fragment:nth-child(1) { animation-delay: 0s; }
+.fragment:nth-child(2) { animation-delay: 0.3s; }
+.fragment:nth-child(3) { animation-delay: 0.6s; }
+.fragment:nth-child(4) { animation-delay: 0.9s; }
+
+@keyframes scatter {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  50% { transform: translateY(20px) rotate(45deg); opacity: 0.7; }
+  100% { transform: translateY(40px) rotate(90deg); opacity: 0; }
+}
+
+.galaxyText {
+  font-size: 2.5em;
+  color: #ffffff;
+  text-shadow: 3px 3px 6px #000;
+  letter-spacing: 2px;
+}
+
+.blockBreakerText {
+  font-size: 2.2em;
+  color: #ffcc00;
+  text-shadow: 3px 3px 6px #000;
+}
+
+.ballIcon {
+  font-size: 1em;
+  color: silver;
+  margin: 0 5px;
+}
+
+/* Paddle graphic under title */
+#paddleGraphic {
+  width: 140px;
+  height: 18px;
+  display: flex;
+  margin: 20px auto;
+}
+#paddleGraphic::before,
+#paddleGraphic::after {
+  content: "";
+  flex: 1;
+  background: #ff0000;
+}
+#paddleGraphic {
+  background: #ffffff;
+  flex: 2;
+}
+
+/* Play button */
+.playBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* ensures spacing below paddle */
+}
+
+.btn {
+  background: #00cc66;
+  border: none;
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  font-size: 1.5em;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 20px #00cc66;
+  transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* keeps button centered horizontally */
+}
+.btn:hover {
+  transform: scale(1.1);
+  background: #00ff88;
+  box-shadow: 0 0 25px #00ff88;
+}
+.bounce {
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Level Select Page */
+#levelSelect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(to bottom, #0a0a2a, #000);
+  padding-top: 30px;
+}
+#levelSelectHeader {
+  font-size: 1.5em;
+  background: #fff;
+  color: #000;
+  padding: 8px 16px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 0 0 10px #fff;
+}
+#levelsGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 40px);
+  grid-gap: 12px;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+.levelBtn {
+  width: 40px;
+  height: 40px;
+  background: #222;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 0.9em;
+  cursor: pointer;
+  text-align: center;
+  line-height: 40px;
+  transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+}
+.levelBtn:hover {
+  transform: scale(1.1);
+  background: #00ccff;
+  box-shadow: 0 0 10px #00ccff;
+}
+.levelLocked {
+  width: 40px;
+  height: 40px;
+  background: #444 url("assets/images/padlock.png") center/20px no-repeat;
+  border: 2px solid #666;
+  cursor: not-allowed;
+}
+
+/* Game Page HUD */
+#hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  color: #fff;
+  padding: 10px;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+#levelDisplay {
+  font-size: 1.2em;
+  color: #ffcc00;
+}
+#stars {
+  color: gold;
+  font-size: 1.2em;
+}
+#audioControls button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 5px;
+  transition: transform 0.2s, color 0.3s;
+}
+#audioControls button:hover {
+  transform: scale(1.2);
+  color: #00ccff;
+}
+
+/* Progress Bar */
+#progressBar {
+  width: 90%;
+  height: 10px;
+  background: #fff;
+  margin: 10px auto;
+  border-radius: 5px;
+  overflow: hidden;
+}
+#progressFill {
+  width: 0%;
+  height: 100%;
+  background: #00cc66;
+  transition: width 0.3s ease;
+}
+
+/* Canvas */
+#gameCanvas {
+  background: #000;
+  border: 2px solid #fff;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+
+/* End Game UI */
+#ui {
+  text-align: center;
+  margin-top: 10px;
+}
+#status {
+  font-size: 1.5em;
+  margin: 10px;
+  color: #ffcc00;
+  text-shadow: 2px 2px 4px #000;
+}
+#endControls {
+  margin-top: 20px;
+}
+#endControls button {
+  background: #00cc66;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin: 5px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+}
+#endControls button:hover {
+  transform: scale(1.1);
+  background: #00ff88;
+  box-shadow: 0 0 10px #00ff88;
+}
+#levelInfo {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
